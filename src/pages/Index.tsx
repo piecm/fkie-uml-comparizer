@@ -5,7 +5,7 @@ import ComparisonView from "@/components/ComparisonView";
 import Header from "@/components/Header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, ArrowRight, RefreshCcw } from "lucide-react";
+import { TableOfContents, ArrowRight, RefreshCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Index: React.FC = () => {
@@ -80,7 +80,7 @@ const Index: React.FC = () => {
       "@startuml\n\ntitle Passenger Boarding Process\n\nparticipant Passenger\nparticipant Stewardess\nparticipant Pilot\n\npassenger -> stewardess: Enter plane\nstewardess -> passenger: Welcome, indicate seat\nnote right: If hand luggage fits\\nin storage space\nalt Fits in storage space\npassenger -> stewardess: Stow luggage\nelse Does not fit in storage space\nstewardess -> passenger: Help pack under seat\nend\n\npassenger -> stewardess: Sit down\nstewardess -> passenger: Check seat belt\nnote right: If seat belt unfastened\nalt Seat belt unfastened\nstewardess -> passenger: Ensure safety\\nPassenger buckles up\nelse Seat belt fastened\nstewardess -> passenger: Confirm safety\nend\n\nstewardess -> passenger: Demonstrate safety demo\npilot -> Passenger: Welcome, introduce crew\npilot -> Passenger: Fly off\n\n@enduml";
     
     const exampleLLMUML = 
-      "@startuml !theme cyborg\n\ntitle Boarding- Activity Diagram\n\nstart\n\n:Passenger enters the plane;\n\n:Stewardess Welcomes;\n\n:Stewardess indicates seat;\n\n:Passenger stows hand luggage;\n\nif (hand luggage < storage space) then (yes) :Stow luggage; else (no) :Stewardess packs hand luggage under the seat; endif\n\n:Passenger sits down;\n\n:Stewardess checks seat belt; if (seat belt unfastened) then (yes) :Stewardess arranges safety; :Passenger buckles up;\n\nendif; :Stewardess confirms safety; :Stewardess demonstrates safety demo; :Pilot welcomes passengers and introduces himself and crew; :Pilot flies off;\n\nstop @enduml";
+      "@startuml !theme cyborg\n\ntitle Boarding- Activity Diagram\n\nstart\n\n:Passenger enters the plane;\n\n:Stewardess Welcomes;\n\n:Stewardess indicates seat;\n\n:Passenger stows hand luggage;\n\nif (enough storage space) then (yes)\n  :Stow luggage;\nelse (no)\n  :Stewardess packs hand luggage under the seat;\nendif\n\n:Passenger sits down;\n\n:Stewardess checks seat belt;\nif (seat belt unfastened) then (yes)\n  :Stewardess arranges safety;\n  :Passenger buckles up;\nendif\n\n:Stewardess confirms safety;\n:Stewardess demonstrates safety demo;\n:Pilot welcomes passengers and introduces himself and crew;\n:Pilot flies off;\n\nstop\n@enduml"
     
     handleTextUpload(exampleText, "example-description.txt");
     handleHumanUMLUpload(exampleHumanUML, "example-human-uml.puml");
@@ -102,7 +102,7 @@ const Index: React.FC = () => {
   }, [textContent, humanUML, llmUML]);
 
   return (
-    <div className="min-h-screen grid-bg pb-16">
+    <div className="min-h-screen pb-16">
       <div className="container mx-auto px-4 py-8">
         <Header />
         
@@ -157,7 +157,7 @@ const Index: React.FC = () => {
                     onClick={loadExampleData}
                     className="w-full sm:w-auto"
                   >
-                    <AlertCircle className="mr-2 h-4 w-4" />
+                    <TableOfContents className="mr-2 h-4 w-4" />
                     Load Example Data
                   </Button>
                 </div>
