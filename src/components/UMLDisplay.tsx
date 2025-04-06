@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { encode } from "plantuml-encoder";
 import { Button } from "@/components/ui/button";
 import { Edit, Eye } from "lucide-react";
+import XMIVisualizer from "./XMIVisualizer";
 
 interface UMLDisplayProps {
   type: "human" | "llm";
@@ -108,17 +109,15 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(!isXMI);
   const [localContent, setLocalContent] = useState(content);
+  const [showPreview, setShowPreview] = useState(false);
 
-  // Wenn es sich um XMI handelt, sollte immer der Anzeige-Modus verwendet werden
+  // Wenn sich isXMI oder content ändert, aktualisiere den lokalen Zustand
   useEffect(() => {
     if (isXMI) {
       setIsEditing(false);
     }
-  }, [isXMI]);
-
-  useEffect(() => {
     setLocalContent(content);
-  }, [content]);
+  }, [isXMI, content]);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setLocalContent(e.target.value);
@@ -128,10 +127,14 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
   };
 
   const toggleView = () => {
-    setIsEditing(!isEditing);
+    if (isXMI) {
+      setShowPreview(!showPreview);
+    } else {
+      setIsEditing(!isEditing);
+    }
   };
 
-  // Wenn es eine XMI-Datei ist, zeigen wir keine PlantUML-Vorschau an
+  // Für PlantUML 
   const encodedUml = !isXMI ? encode(localContent) : "";
   const plantUmlUrl = !isXMI ? `https://www.plantuml.com/plantuml/svg/${encodedUml}` : "";
 
@@ -142,21 +145,23 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
       }`}
     >
       <div className="flex justify-end mb-2">
-        {!isXMI && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={toggleView}
-            className="flex items-center gap-1"
-          >
-            {isEditing ? (
-              <Eye className="h-4 w-4" />
-            ) : (
-              <Edit className="h-4 w-4" />
-            )}
-            <span>{isEditing ? "Vorschau" : "Bearbeiten"}</span>
-          </Button>
-        )}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={toggleView}
+          className="flex items-center gap-1"
+        >
+          {(isEditing || (!isXMI && !isEditing) || (isXMI && !showPreview)) ? (
+            <Eye className="h-4 w-4" />
+          ) : (
+            <Edit className="h-4 w-4" />
+          )}
+          <span>
+            {isXMI 
+              ? (showPreview ? "Quellcode" : "Vorschau") 
+              : (isEditing ? "Vorschau" : "Bearbeiten")}
+          </span>
+        </Button>
       </div>
 
       <Card
@@ -166,8 +171,8 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
             : "uml-display-llm border-uml-llm/30"
         } h-[500px] shadow-lg border-2`}
       >
-        {/* XMI Anzeige */}
-        {isXMI && (
+        {/* XMI Code-Ansicht */}
+        {isXMI && !showPreview && (
           <div className="w-full h-full overflow-auto">
             <pre
               className="p-4 font-mono text-foreground whitespace-pre text-sm"
@@ -175,6 +180,13 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
                 __html: highlightUMLSyntax(localContent, true),
               }}
             />
+          </div>
+        )}
+
+        {/* XMI Vorschau-Ansicht */}
+        {isXMI && showPreview && (
+          <div className="w-full h-full bg-[#f8f9fa] overflow-y-auto">
+            <XMIVisualizer xmiContent={localContent} />
           </div>
         )}
 
