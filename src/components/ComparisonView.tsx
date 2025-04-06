@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import UMLDisplay from "./UMLDisplay";
 import TextDisplay from "./TextDisplay";
-import { ArrowDown } from "lucide-react";
 
 interface ComparisonViewProps {
   textContent: string;

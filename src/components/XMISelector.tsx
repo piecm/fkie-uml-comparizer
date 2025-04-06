@@ -58,7 +58,13 @@ const XMISelector: React.FC<XMISelectorProps> = ({
               />
             </div>
             
-            <Select onValueChange={onXMISelect}>
+            <Select onValueChange={(value) => {
+              // Strip .xmi extension if present before passing to onXMISelect
+              const baseName = value.endsWith('.xmi') 
+                ? value.substring(0, value.length - 4) 
+                : value;
+              onXMISelect(baseName);
+            }}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="XMI Datei auswählen" />
               </SelectTrigger>

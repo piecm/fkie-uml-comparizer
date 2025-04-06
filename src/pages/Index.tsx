@@ -101,7 +101,7 @@ const Index: React.FC = () => {
         })
         .catch(() => {
           // Fallback, falls die Ausgabe-XMI nicht gefunden wird
-          return `@startuml\ntitle Keine Ausgabe-XMI gefunden für ${selectedXMI}\n@enduml`;
+          return `<?xml version="1.0" encoding="UTF-8"?>\n<xmi:XMI xmlns:xmi="http://www.omg.org/XMI">\n  <message>Keine Ausgabe-XMI gefunden für ${selectedXMI}</message>\n</xmi:XMI>`;
         });
       
       // Beide Dateien laden und dann fortfahren
