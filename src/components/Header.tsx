@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Activity, Code, Cpu } from "lucide-react";
 
@@ -10,10 +9,13 @@ const Header: React.FC = () => {
           <Code className="h-8 w-8 text-uml-human opacity-0" />
           <Cpu className="h-8 w-8 text-uml-llm absolute -top-1 -right-1 transform rotate-12" />
         </div>
-        <h1 className="text-3xl font-bold tracking-tight">r2text UML Comparison Tool</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          re2text UML Vergleich
+        </h1>
       </div>
       <p className="text-muted-foreground text-center max-w-xl">
-        Visualize and compare human-created and AI-generated UML diagrams from text descriptions
+        Visualisiere und Vergleiche Menschliche mit KI-Generierten
+        UML-Diagrammen aus Textbeschreibungen
       </p>
     </header>
   );

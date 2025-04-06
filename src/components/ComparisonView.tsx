@@ -34,12 +34,12 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold text-uml-human flex items-center space-x-2 opacity-90">
-            <span>Human UML</span>
+            <span>Mensch UML</span>
           </h3>
-          <UMLDisplay 
-            type="human" 
-            content={localHumanUML} 
-            isVisible={areUMLsVisible} 
+          <UMLDisplay
+            type="human"
+            content={localHumanUML}
+            isVisible={areUMLsVisible}
             onContentChange={handleHumanUMLChange}
           />
         </div>
@@ -48,24 +48,18 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
           <h3 className="text-lg font-semibold text-uml-llm flex items-center space-x-2 opacity-90">
             <span>LLM UML</span>
           </h3>
-          <UMLDisplay 
-            type="llm" 
-            content={localLLMUML} 
-            isVisible={areUMLsVisible} 
+          <UMLDisplay
+            type="llm"
+            content={localLLMUML}
+            isVisible={areUMLsVisible}
             onContentChange={handleLLMUMLChange}
           />
         </div>
       </div>
 
-      <div className="flex justify-center">
-        <div className="animate-bounce bg-secondary/50 p-2 w-10 h-10 ring-1 ring-primary/20 shadow-lg rounded-full flex items-center justify-center">
-          <ArrowDown className="h-6 w-6 text-primary" />
-        </div>
-      </div>
-
       <div className="space-y-2">
         <h3 className="text-lg font-semibold flex items-center space-x-2 opacity-90">
-          <span>Text Description</span>
+          <span>Text</span>
         </h3>
         <TextDisplay content={textContent} isVisible={isTextVisible} />
       </div>
