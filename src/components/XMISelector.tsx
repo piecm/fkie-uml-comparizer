@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Search, Database, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { AVAILABLE_XMI_FILES } from "@/data/availableFiles";
 
 interface XMISelectorProps {
   onXMISelect: (fileName: string) => void;
@@ -18,49 +19,7 @@ interface XMISelectorProps {
 
 // Diese Liste enthält alle verfügbaren XMI-Dateien aus dem data/input Verzeichnis
 // ohne die .xmi Endung
-const AVAILABLE_XMI_FILES = [
-  "yapplib",
-  "yatt_design_uml",
-  "yali",
-  "yali_1",
-  "yali_10",
-  "yali_3",
-  "yali_4",
-  "yali_5",
-  "yali_6",
-  "yali_7",
-  "university",
-  "university_2",
-  "university_example",
-  "uml_diagram",
-  "uml_diagram_1",
-  "uml_diagram_2",
-  "uml_10",
-  "uml_11",
-  "uml_15",
-  "uml_22",
-  "uml_23",
-  "uml_28",
-  "uml_29",
-  "uml_32",
-  "uml_35",
-  "uml_39",
-  "uml_46",
-  "uml_51",
-  "uml_52",
-  "uml_53",
-  "uml_54",
-  "uml_56",
-  "uml_58",
-  "uml_69",
-  "uml_82",
-  "uml_83",
-  "uml_86",
-  "tools",
-  "xmiMetamodel",
-  "xmlreader_1",
-  "user"
-];
+ 
 
 const XMISelector: React.FC<XMISelectorProps> = ({
   onXMISelect,
