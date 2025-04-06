@@ -107,8 +107,6 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
   };
 
   // Wenn es eine XMI-Datei ist, zeigen wir keine PlantUML-Vorschau an
-  const showPlantUML = !isXMI && !isEditing;
-  
   const encodedUml = !isXMI ? encode(localContent) : "";
   const plantUmlUrl = !isXMI ? `https://www.plantuml.com/plantuml/svg/${encodedUml}` : "";
 
@@ -141,24 +139,63 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
           type === "human"
             ? "uml-display-human border-uml-human/30"
             : "uml-display-llm border-uml-llm/30"
-        } h-[500px] shadow-lg overflow-hidden border-2`}
+        } h-[500px] shadow-lg border-2`}
       >
-        {isEditing || isXMI ? (
-          <div className="relative w-full h-full">
-            <textarea
-              className="absolute inset-0 w-full h-full p-4 bg-transparent text-foreground font-mono resize-none outline-none opacity-0"
-              value={localContent}
-              onChange={handleTextChange}
-              spellCheck={false}
-            />
+        {/* XMI Anzeige */}
+        {isXMI && (
+          <div className="w-full h-full overflow-auto">
             <pre
-              className="w-full h-full p-4 font-mono text-foreground overflow-auto whitespace-pre"
+              className="p-4 font-mono text-foreground whitespace-pre"
               dangerouslySetInnerHTML={{
-                __html: highlightUMLSyntax(localContent, isXMI),
+                __html: highlightUMLSyntax(localContent, true),
               }}
             />
           </div>
-        ) : (
+        )}
+
+        {/* UML Editor Ansicht */}
+        {!isXMI && isEditing && (
+          <div className="w-full h-full relative">
+            <div 
+              className="w-full h-full overflow-auto"
+              id={`uml-editor-${type}`}
+            >
+              <div className="p-4 min-h-full">
+                <div 
+                  className="font-mono whitespace-pre" 
+                  dangerouslySetInnerHTML={{
+                    __html: highlightUMLSyntax(localContent, false),
+                  }}
+                />
+              </div>
+            </div>
+            <textarea
+              className="absolute top-0 left-0 w-full h-full opacity-0 resize-none outline-none"
+              value={localContent}
+              onChange={(e) => {
+                handleTextChange(e);
+                // Synchronisiere das Scrollen zwischen Textarea und dem angezeigten Code
+                const editorDiv = document.getElementById(`uml-editor-${type}`);
+                if (editorDiv) {
+                  editorDiv.scrollTop = e.currentTarget.scrollTop;
+                  editorDiv.scrollLeft = e.currentTarget.scrollLeft;
+                }
+              }}
+              onScroll={(e) => {
+                // Synchronisiere das Scrollen zwischen Textarea und dem angezeigten Code
+                const editorDiv = document.getElementById(`uml-editor-${type}`);
+                if (editorDiv) {
+                  editorDiv.scrollTop = e.currentTarget.scrollTop;
+                  editorDiv.scrollLeft = e.currentTarget.scrollLeft;
+                }
+              }}
+              spellCheck={false}
+            />
+          </div>
+        )}
+
+        {/* UML Diagramm Vorschau */}
+        {!isXMI && !isEditing && (
           <div className="w-full h-full bg-[#f8f9fa] overflow-y-auto">
             <div
               className="w-full min-h-full p-4"
