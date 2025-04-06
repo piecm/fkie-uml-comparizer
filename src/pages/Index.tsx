@@ -108,8 +108,8 @@ const Index: React.FC = () => {
       Promise.all([loadInputXMI, loadOutputXMI])
         .then(([inputContent, outputContent]) => {
           setTextContent(inputContent);
-          setHumanUML(`@startuml\ntitle Eingabe-XMI: ${selectedXMI}\n\n${inputContent}\n@enduml`);
-          setLlmUML(`@startuml\ntitle Ausgabe-XMI: ${selectedXMI}\n\n${outputContent}\n@enduml`);
+          setHumanUML(inputContent);
+          setLlmUML(outputContent);
           
           // Setze die Dateinamen
           setTextFileName(`${selectedXMI}.xmi`);
@@ -284,6 +284,7 @@ const Index: React.FC = () => {
                 llmUML={llmUML}
                 isTextVisible={textVisible}
                 areUMLsVisible={umlsVisible}
+                isXMI={inputMethod === "xmi"}
               />
             </div>
           )}

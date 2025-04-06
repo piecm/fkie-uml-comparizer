@@ -9,6 +9,7 @@ interface ComparisonViewProps {
   llmUML: string;
   isTextVisible: boolean;
   areUMLsVisible: boolean;
+  isXMI?: boolean;
 }
 
 const ComparisonView: React.FC<ComparisonViewProps> = ({
@@ -17,6 +18,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
   llmUML,
   isTextVisible,
   areUMLsVisible,
+  isXMI = false,
 }) => {
   const [localHumanUML, setLocalHumanUML] = useState(humanUML);
   const [localLLMUML, setLocalLLMUML] = useState(llmUML);
@@ -34,32 +36,34 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold text-uml-human flex items-center space-x-2 opacity-90">
-            <span>Mensch UML</span>
+            <span>{isXMI ? "Eingabe-XMI" : "Mensch UML"}</span>
           </h3>
           <UMLDisplay
             type="human"
             content={localHumanUML}
             isVisible={areUMLsVisible}
             onContentChange={handleHumanUMLChange}
+            isXMI={isXMI}
           />
         </div>
 
         <div className="space-y-2">
           <h3 className="text-lg font-semibold text-uml-llm flex items-center space-x-2 opacity-90">
-            <span>LLM UML</span>
+            <span>{isXMI ? "Ausgabe-XMI" : "LLM UML"}</span>
           </h3>
           <UMLDisplay
             type="llm"
             content={localLLMUML}
             isVisible={areUMLsVisible}
             onContentChange={handleLLMUMLChange}
+            isXMI={isXMI}
           />
         </div>
       </div>
 
       <div className="space-y-2">
         <h3 className="text-lg font-semibold flex items-center space-x-2 opacity-90">
-          <span>Text</span>
+          <span>{isXMI ? "XMI Beschreibung" : "Text"}</span>
         </h3>
         <TextDisplay content={textContent} isVisible={isTextVisible} />
       </div>

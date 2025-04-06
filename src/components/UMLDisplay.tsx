@@ -8,10 +8,40 @@ interface UMLDisplayProps {
   type: "human" | "llm";
   content: string;
   isVisible: boolean;
+  isXMI?: boolean;
   onContentChange?: (newContent: string) => void;
 }
 
-const highlightUMLSyntax = (code: string): string => {
+const highlightUMLSyntax = (code: string, isXMI: boolean): string => {
+  if (isXMI) {
+    // XML/XMI Syntax-Highlighting
+    return code
+      .split("\n")
+      .map((line) => {
+        // XML-Tags
+        line = line.replace(
+          /(&lt;|<)(\/?)([\w:-]+)([^>]*?)(\/?)(>|&gt;)/g,
+          '$1$2<span class="text-blue-400">$3</span>$4$5$6'
+        );
+        
+        // XML-Attribute
+        line = line.replace(
+          /(\s+)([\w:-]+)(=)(".*?")/g,
+          '$1<span class="text-green-400">$2</span>$3<span class="text-orange-400">$4</span>'
+        );
+        
+        // XML-Kommentare
+        line = line.replace(
+          /(&lt;!--|<!--)(.*?)(-->|&gt;)/g,
+          '<span class="text-yellow-400">$1$2$3</span>'
+        );
+        
+        return line;
+      })
+      .join("\n");
+  }
+  
+  // Standard UML Syntax-Highlighting
   return code
     .split("\n")
     .map((line) => {
@@ -59,6 +89,7 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
   type,
   content,
   isVisible,
+  isXMI = false,
   onContentChange,
 }) => {
   const [isEditing, setIsEditing] = useState(true);
@@ -75,8 +106,11 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
     setIsEditing(!isEditing);
   };
 
-  const encodedUml = encode(localContent);
-  const plantUmlUrl = `https://www.plantuml.com/plantuml/svg/${encodedUml}`;
+  // Wenn es eine XMI-Datei ist, zeigen wir keine PlantUML-Vorschau an
+  const showPlantUML = !isXMI && !isEditing;
+  
+  const encodedUml = !isXMI ? encode(localContent) : "";
+  const plantUmlUrl = !isXMI ? `https://www.plantuml.com/plantuml/svg/${encodedUml}` : "";
 
   return (
     <div
@@ -85,19 +119,21 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
       }`}
     >
       <div className="flex justify-end mb-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={toggleView}
-          className="flex items-center gap-1"
-        >
-          {isEditing ? (
-            <Eye className="h-4 w-4" />
-          ) : (
-            <Edit className="h-4 w-4" />
-          )}
-          <span>{isEditing ? "Vorschau" : "Bearbeiten"}</span>
-        </Button>
+        {!isXMI && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleView}
+            className="flex items-center gap-1"
+          >
+            {isEditing ? (
+              <Eye className="h-4 w-4" />
+            ) : (
+              <Edit className="h-4 w-4" />
+            )}
+            <span>{isEditing ? "Vorschau" : "Bearbeiten"}</span>
+          </Button>
+        )}
       </div>
 
       <Card
@@ -107,7 +143,7 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
             : "uml-display-llm border-uml-llm/30"
         } h-[500px] shadow-lg overflow-hidden border-2`}
       >
-        {isEditing ? (
+        {isEditing || isXMI ? (
           <div className="relative w-full h-full">
             <textarea
               className="absolute inset-0 w-full h-full p-4 bg-transparent text-foreground font-mono resize-none outline-none opacity-0"
@@ -118,7 +154,7 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
             <pre
               className="w-full h-full p-4 font-mono text-foreground overflow-auto whitespace-pre"
               dangerouslySetInnerHTML={{
-                __html: highlightUMLSyntax(localContent),
+                __html: highlightUMLSyntax(localContent, isXMI),
               }}
             />
           </div>
