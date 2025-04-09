@@ -185,7 +185,7 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
 
         {/* XMI Vorschau-Ansicht */}
         {isXMI && showPreview && (
-          <div className="w-full h-full bg-[#f8f9fa] overflow-y-auto">
+          <div className="w-full h-full bg-[#ffffff] overflow-y-auto">
             <XMIVisualizer xmiContent={localContent} />
           </div>
         )}
@@ -204,7 +204,7 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
 
         {/* UML Diagramm Vorschau */}
         {!isXMI && !isEditing && (
-          <div className="w-full h-full bg-[#f8f9fa] overflow-y-auto">
+          <div className="w-full h-full bg-[#ffffff] overflow-y-auto">
             <div
               className="w-full min-h-full p-4"
               style={{

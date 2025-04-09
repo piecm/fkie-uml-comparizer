@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { XMLParser } from "fast-xml-parser";
 import * as d3 from "d3";
+import { useTheme } from "next-themes";
 
 interface XMIVisualizerProps {
   xmiContent: string;
@@ -8,6 +9,34 @@ interface XMIVisualizerProps {
 
 const XMIVisualizer: React.FC<XMIVisualizerProps> = ({ xmiContent }) => {
   const svgRef = useRef<SVGSVGElement>(null);
+  const { theme } = useTheme();
+
+  // Light Mode Farbpalette
+  const lightColors = {
+    background: "#ffffff", // white
+    surface: "#f8fafc",    // slate-50
+    border: "#e2e8f0",     // slate-200
+    text: "#1e293b",       // slate-800
+    textMuted: "#64748b",  // slate-500
+    accent: "#4f46e5",     // indigo-600
+    link: "#64748b",       // slate-500
+    inheritance: "#64748b" // slate-500
+  };
+
+  // Dark Mode Farbpalette
+  const darkColors = {
+    background: "#0f172a", // slate-900
+    surface: "#1e293b",    // slate-800
+    border: "#475569",     // slate-600
+    text: "#e2e8f0",       // slate-200
+    textMuted: "#94a3b8",  // slate-400
+    accent: "#60a5fa",     // blue-400
+    link: "#94a3b8",       // slate-400
+    inheritance: "#94a3b8" // slate-400
+  };
+
+  // Wähle die passende Farbpalette basierend auf dem Theme
+  const colors = theme === "dark" ? darkColors : lightColors;
 
   useEffect(() => {
     if (!xmiContent || !svgRef.current) return;
@@ -73,7 +102,7 @@ const XMIVisualizer: React.FC<XMIVisualizerProps> = ({ xmiContent }) => {
         .attr("fill", "#666")
         .text(String(error).substring(0, 100));
     }
-  }, [xmiContent]);
+  }, [xmiContent, theme]);
 
   // Extracts UML elements from the parsed XML
   const extractUMLElements = (parsedXml: any) => {
@@ -536,18 +565,6 @@ const XMIVisualizer: React.FC<XMIVisualizerProps> = ({ xmiContent }) => {
   const renderUMLVisualization = (svg: d3.Selection<SVGSVGElement, unknown, null, undefined>, data: any) => {
     const { classes, associations } = data;
     
-    // Dark Mode Farbpalette
-    const colors = {
-      background: "#0f172a", // slate-900
-      surface: "#1e293b",    // slate-800
-      border: "#475569",     // slate-600
-      text: "#e2e8f0",       // slate-200
-      textMuted: "#94a3b8",  // slate-400
-      accent: "#60a5fa",     // blue-400
-      link: "#94a3b8",       // slate-400
-      inheritance: "#94a3b8" // slate-400
-    };
-    
     // SVG-Hintergrund einstellen
     svg.attr("style", `background-color: ${colors.background}`);
     
@@ -917,7 +934,7 @@ const XMIVisualizer: React.FC<XMIVisualizerProps> = ({ xmiContent }) => {
         ref={svgRef} 
         width="100%" 
         height="100%" 
-        className="border border-slate-600 shadow-sm rounded-md"
+        className="border border-slate-200 dark:border-slate-600 shadow-sm rounded-md"
       />
     </div>
   );
