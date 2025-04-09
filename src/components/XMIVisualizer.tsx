@@ -330,7 +330,8 @@ const XMIVisualizer: React.FC<XMIVisualizerProps> = ({ xmiContent }) => {
       for (const attr of umlAttributes) {
         attributes.push({
           name: attr["@_name"] || "unnamed",
-          type: attr["@_type"] ? findTypeName(attr["@_type"]) : "unknown"
+          type: "string", // Standardtyp für Attribute ohne expliziten Typ
+          visibility: attr["@_visibility"] || "private"
         });
       }
     }
@@ -347,7 +348,27 @@ const XMIVisualizer: React.FC<XMIVisualizerProps> = ({ xmiContent }) => {
         for (const attr of umlAttributes) {
           attributes.push({
             name: attr["@_name"] || "unnamed",
-            type: extractType(attr)
+            type: extractType(attr),
+            visibility: attr["@_visibility"] || "private"
+          });
+        }
+      }
+    }
+    
+    // Suche nach Attributen in Namespace.ownedElement
+    if (cls["UML:Namespace.ownedElement"]) {
+      const ownedElements = cls["UML:Namespace.ownedElement"];
+      
+      if (ownedElements["UML:Attribute"]) {
+        const umlAttributes = Array.isArray(ownedElements["UML:Attribute"]) 
+          ? ownedElements["UML:Attribute"] 
+          : [ownedElements["UML:Attribute"]];
+        
+        for (const attr of umlAttributes) {
+          attributes.push({
+            name: attr["@_name"] || "unnamed",
+            type: "string", // Standardtyp für Attribute ohne expliziten Typ
+            visibility: attr["@_visibility"] || "private"
           });
         }
       }
@@ -749,19 +770,24 @@ const XMIVisualizer: React.FC<XMIVisualizerProps> = ({ xmiContent }) => {
       if (d.attributes.length === 0) {
         group.append("text")
           .attr("x", 10)
-          .attr("y", 45) // Leicht angepasst
+          .attr("y", 45)
           .attr("font-size", "10px")
           .attr("font-style", "italic")
           .attr("fill", colors.textMuted)
           .text("keine Attribute");
       } else {
         d.attributes.forEach((attr: any, index: number) => {
+          // Füge Sichtbarkeitssymbol hinzu
+          const visibilitySymbol = attr.visibility === "public" ? "+" : 
+                                 attr.visibility === "protected" ? "#" : 
+                                 attr.visibility === "private" ? "-" : "";
+          
           group.append("text")
             .attr("x", 10)
-            .attr("y", 30 + 18 * (index + 1)) // Zeilenhöhe angepasst
-            .attr("font-size", "11px") // Schriftgröße reduziert
+            .attr("y", 30 + 18 * (index + 1))
+            .attr("font-size", "11px")
             .attr("fill", colors.text)
-            .text(`${attr.name}: ${attr.type}`);
+            .text(`${visibilitySymbol} ${attr.name}: ${attr.type}`);
         });
       }
       
