@@ -800,10 +800,10 @@ const XMIDiffVisualizer: React.FC<XMIDiffVisualizerProps> = ({ originalXmi, gene
       .attr("transform", `translate(${width - 200}, 20)`);
     
     const legendItems = [
-      { status: 'added', label: 'Hinzugefügt' },
-      { status: 'removed', label: 'Entfernt' },
-      { status: 'modified', label: 'Modifiziert' },
-      { status: 'unchanged', label: 'Unverändert' }
+      { status: 'added', label: 'Added' },
+      { status: 'removed', label: 'Removed' },
+      { status: 'modified', label: 'Modified' },
+      { status: 'unchanged', label: 'Unchanged' }
     ];
     
     legendItems.forEach((item, i) => {
@@ -843,21 +843,21 @@ const XMIDiffVisualizer: React.FC<XMIDiffVisualizerProps> = ({ originalXmi, gene
       </div>
       
       <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 overflow-auto max-h-[200px]">
-        <h3 className="text-base font-semibold mb-2">Text-Vergleich:</h3>
+        <h3 className="text-base font-semibold mb-2">Text Comparison:</h3>
         
         {diffElements.classes.length === 0 && diffElements.associations.length === 0 ? (
-          <p className="text-sm italic text-slate-500 dark:text-slate-400">Keine Unterschiede gefunden.</p>
+          <p className="text-sm italic text-slate-500 dark:text-slate-400">No differences found.</p>
         ) : (
           <div className="space-y-1">
             {diffElements.classes.filter(cls => cls.status !== 'unchanged').map((cls, index) => (
               <div key={`class-${index}`} className="text-sm" style={{ color: getStatusColor(cls.status) }}>
-                {cls.status === 'added' ? '+' : cls.status === 'removed' ? '-' : '~'} Klasse: {cls.name}
+                {cls.status === 'added' ? '+' : cls.status === 'removed' ? '-' : '~'} Class: {cls.name}
               </div>
             ))}
             
             {diffElements.associations.filter(assoc => assoc.status !== 'unchanged').map((assoc, index) => (
               <div key={`assoc-${index}`} className="text-sm" style={{ color: getStatusColor(assoc.status) }}>
-                {assoc.status === 'added' ? '+' : assoc.status === 'removed' ? '-' : '~'} Assoziation: {assoc.name || 'unnamed'}
+                {assoc.status === 'added' ? '+' : assoc.status === 'removed' ? '-' : '~'} Association: {assoc.name || 'unnamed'}
               </div>
             ))}
           </div>

@@ -28,26 +28,26 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
 
   useEffect(() => {
     if (isXMI && showDiff) {
-      console.log("Debug - ComparisonView - showDiff aktiviert");
-      console.log("Debug - ComparisonView - humanUML Länge:", localHumanUML ? localHumanUML.length : 0);
-      console.log("Debug - ComparisonView - llmUML Länge:", localLLMUML ? localLLMUML.length : 0);
-      console.log("Debug - ComparisonView - humanUML Start:", localHumanUML ? localHumanUML.substring(0, 100) : "leer");
-      console.log("Debug - ComparisonView - llmUML Start:", localLLMUML ? localLLMUML.substring(0, 100) : "leer");
+      console.log("Debug - ComparisonView - showDiff activated");
+      console.log("Debug - ComparisonView - humanUML length:", localHumanUML ? localHumanUML.length : 0);
+      console.log("Debug - ComparisonView - llmUML length:", localLLMUML ? localLLMUML.length : 0);
+      console.log("Debug - ComparisonView - humanUML start:", localHumanUML ? localHumanUML.substring(0, 100) : "empty");
+      console.log("Debug - ComparisonView - llmUML start:", localLLMUML ? localLLMUML.substring(0, 100) : "empty");
     }
   }, [isXMI, showDiff, localHumanUML, localLLMUML]);
 
   const handleHumanUMLChange = (newContent: string) => {
-    console.log("Debug - ComparisonView - humanUML geändert, neue Länge:", newContent.length);
+    console.log("Debug - ComparisonView - humanUML changed, new length:", newContent.length);
     setLocalHumanUML(newContent);
   };
 
   const handleLLMUMLChange = (newContent: string) => {
-    console.log("Debug - ComparisonView - llmUML geändert, neue Länge:", newContent.length);
+    console.log("Debug - ComparisonView - llmUML changed, new length:", newContent.length);
     setLocalLLMUML(newContent);
   };
 
   const toggleDiffView = () => {
-    console.log("Debug - ComparisonView - toggleDiffView aufgerufen, neuer Wert:", !showDiff);
+    console.log("Debug - ComparisonView - toggleDiffView called, new value:", !showDiff);
     setShowDiff(!showDiff);
   };
 
@@ -61,7 +61,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
             className="flex items-center gap-2"
           >
             <Diff className="h-4 w-4" />
-            {showDiff ? "Normale Ansicht" : "Unterschiede anzeigen"}
+            {showDiff ? "Normal View" : "Show Differences"}
           </Button>
         </div>
       )}
@@ -69,7 +69,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
       {isXMI && showDiff ? (
         <div className="space-y-2">
           <h3 className="text-lg font-semibold flex items-center space-x-2 opacity-90">
-            <span>XMI Unterschiedsvisualisierung</span>
+            <span>XMI Difference Visualization</span>
           </h3>
           <div 
             className="h-[700px] border-2 border-slate-300 dark:border-slate-600 rounded-md shadow-lg"
@@ -89,7 +89,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-uml-human flex items-center space-x-2 opacity-90">
-              <span>{isXMI ? "Eingabe-XMI" : "Mensch UML"}</span>
+              <span>{isXMI ? "Input XMI" : "Human UML"}</span>
             </h3>
             <UMLDisplay
               type="human"
@@ -102,7 +102,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
 
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-uml-llm flex items-center space-x-2 opacity-90">
-              <span>{isXMI ? "Ausgabe-XMI" : "LLM UML"}</span>
+              <span>{isXMI ? "Output XMI" : "LLM UML"}</span>
             </h3>
             <UMLDisplay
               type="llm"
@@ -117,7 +117,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
 
       <div className="space-y-2">
         <h3 className="text-lg font-semibold flex items-center space-x-2 opacity-90">
-          <span>{isXMI ? "XMI Beschreibung" : "Text"}</span>
+          <span>{isXMI ? "XMI Description" : "Text"}</span>
         </h3>
         <TextDisplay content={textContent} isVisible={isTextVisible} />
       </div>

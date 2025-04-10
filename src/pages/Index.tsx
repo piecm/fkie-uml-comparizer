@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index: React.FC = () => {
-  // States für File Upload
+  // States for File Upload
   const [textContent, setTextContent] = useState<string>("");
   const [humanUML, setHumanUML] = useState<string>("");
   const [llmUML, setLlmUML] = useState<string>("");
@@ -19,14 +19,14 @@ const Index: React.FC = () => {
   const [humanUMLFileName, setHumanUMLFileName] = useState<string | null>(null);
   const [llmUMLFileName, setLlmUMLFileName] = useState<string | null>(null);
   
-  // State für XMI Auswahl
+  // State for XMI Selection
   const [selectedXMI, setSelectedXMI] = useState<string | null>(null);
   
   const [showComparison, setShowComparison] = useState<boolean>(false);
   const [textVisible, setTextVisible] = useState<boolean>(false);
   const [umlsVisible, setUmlsVisible] = useState<boolean>(false);
   
-  // State für Eingabemethode (Upload oder XMI)
+  // State for input method (Upload or XMI)
   const [inputMethod, setInputMethod] = useState<"upload" | "xmi">("upload");
   
   const { toast } = useToast();
@@ -67,8 +67,8 @@ const Index: React.FC = () => {
     if (inputMethod === "upload") {
       if (!textContent || !humanUML || !llmUML) {
         toast({
-          title: "Fehlende Dateien",
-          description: "Bitte laden Sie alle drei erforderlichen Dateien hoch, um zu vergleichen.",
+          title: "Missing Files",
+          description: "Please upload all three required files to compare.",
           variant: "destructive",
         });
         return;
@@ -76,18 +76,18 @@ const Index: React.FC = () => {
     } else if (inputMethod === "xmi") {
       if (!selectedXMI) {
         toast({
-          title: "Keine XMI ausgewählt",
-          description: "Bitte wählen Sie eine XMI-Datei aus der Datenbank aus.",
+          title: "No XMI Selected",
+          description: "Please select an XMI file from the database.",
           variant: "destructive",
         });
         return;
       }
       
-      // Laden der XMI-Dateien aus dem data-Ordner
+      // Loading XMI files from the data folder
       const loadInputXMI = fetch(`/data/input/${selectedXMI}.xmi`)
         .then(response => {
           if (!response.ok) {
-            throw new Error(`Konnte Eingabe-XMI nicht laden: ${response.statusText}`);
+            throw new Error(`Could not load input XMI: ${response.statusText}`);
           }
           return response.text();
         });
@@ -95,45 +95,45 @@ const Index: React.FC = () => {
       const loadOutputXMI = fetch(`/data/output/${selectedXMI}.xmi`)
         .then(response => {
           if (!response.ok) {
-            throw new Error(`Konnte Ausgabe-XMI nicht laden: ${response.statusText}`);
+            throw new Error(`Could not load output XMI: ${response.statusText}`);
           }
           return response.text();
         })
         .catch(() => {
-          // Fallback, falls die Ausgabe-XMI nicht gefunden wird
-          return `<?xml version="1.0" encoding="UTF-8"?>\n<xmi:XMI xmlns:xmi="http://www.omg.org/XMI">\n  <message>Keine Ausgabe-XMI gefunden für ${selectedXMI}</message>\n</xmi:XMI>`;
+          // Fallback if output XMI is not found
+          return `<?xml version="1.0" encoding="UTF-8"?>\n<xmi:XMI xmlns:xmi="http://www.omg.org/XMI">\n  <message>No output XMI found for ${selectedXMI}</message>\n</xmi:XMI>`;
         });
       
-      // Beide Dateien laden und dann fortfahren
+      // Load both files and then continue
       Promise.all([loadInputXMI, loadOutputXMI])
         .then(([inputContent, outputContent]) => {
           setTextContent(inputContent);
           setHumanUML(inputContent);
           setLlmUML(outputContent);
           
-          // Setze die Dateinamen
+          // Set filenames
           setTextFileName(`${selectedXMI}.xmi`);
           setHumanUMLFileName(`${selectedXMI}_input.xmi`);
           setLlmUMLFileName(`${selectedXMI}_output.xmi`);
           
-          // Animation starten
+          // Start animation
           showComparisonUI();
         })
         .catch(error => {
           toast({
-            title: "Fehler beim Laden der XMI-Dateien",
+            title: "Error loading XMI files",
             description: error.message,
             variant: "destructive",
           });
         });
       
-      return; // Frühzeitig beenden, da wir die Animation erst nach dem Laden starten
+      return; // Exit early as we start the animation after loading
     }
 
     showComparisonUI();
   };
   
-  // Hilfsfunktion für die Animation
+  // Helper function for animation
   const showComparisonUI = () => {
     setShowComparison(true);
     
@@ -164,8 +164,8 @@ const Index: React.FC = () => {
     handleLLMUMLUpload(exampleLLMUML, "example-llm-uml.puml");
     
     toast({
-      title: "Beispieldaten geladen",
-      description: "Beispieltext und UML-Diagramme wurden geladen.",
+      title: "Example data loaded",
+      description: "Example text and UML diagrams have been loaded.",
     });
   };
 
@@ -194,8 +194,8 @@ const Index: React.FC = () => {
                   className="w-full mb-6"
                 >
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="upload">Datei Upload</TabsTrigger>
-                    <TabsTrigger value="xmi">XMI aus Datenbank</TabsTrigger>
+                    <TabsTrigger value="upload">File Upload</TabsTrigger>
+                    <TabsTrigger value="xmi">XMI from Database</TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="upload">
@@ -253,7 +253,7 @@ const Index: React.FC = () => {
                     className="w-full sm:w-auto"
                   >
                     <ArrowRight className="mr-2 h-4 w-4" />
-                    UML-Diagramme vergleichen
+                    Compare UML Diagrams
                   </Button>
                   
                   {inputMethod === "upload" && (
@@ -263,7 +263,7 @@ const Index: React.FC = () => {
                       className="w-full sm:w-auto"
                     >
                       <TableOfContents className="mr-2 h-4 w-4" />
-                      Beispieldaten laden
+                      Load Example Data
                     </Button>
                   )}
                 </div>
@@ -274,7 +274,7 @@ const Index: React.FC = () => {
               <div className="flex justify-end">
                 <Button variant="outline" onClick={resetAll} size="sm">
                   <RefreshCcw className="mr-2 h-4 w-4" />
-                  Neue Dateien hochladen
+                  Upload New Files
                 </Button>
               </div>
               

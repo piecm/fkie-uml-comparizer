@@ -6,7 +6,7 @@ Ein modernes Werkzeug zur Visualisierung und zum Vergleich von UML-Diagrammen un
 
 ### Überblick
 
-UML-Whisper-Viz ermöglicht es, UML-Diagramme zu visualisieren und zu vergleichen - sowohl manuell erstellte als auch durch KI generierte Diagramme. Die Anwendung unterstützt:
+Die Anwendung unterstützt:
 
 - Visualisierung von PlantUML-Dateien
 - Visualisierung von XMI-Dateien (UML-Klassendiagramme)

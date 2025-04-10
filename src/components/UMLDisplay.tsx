@@ -158,8 +158,8 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
           )}
           <span>
             {isXMI 
-              ? (showPreview ? "Quellcode" : "Vorschau") 
-              : (isEditing ? "Vorschau" : "Bearbeiten")}
+              ? (showPreview ? "Source Code" : "Preview") 
+              : (isEditing ? "Preview" : "Edit")}
           </span>
         </Button>
       </div>
@@ -171,7 +171,7 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
             : "uml-display-llm border-uml-llm/30"
         } h-[500px] shadow-lg border-2`}
       >
-        {/* XMI Code-Ansicht */}
+        {/* XMI Code View */}
         {isXMI && !showPreview && (
           <div className="w-full h-full overflow-auto">
             <pre
@@ -183,14 +183,14 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
           </div>
         )}
 
-        {/* XMI Vorschau-Ansicht */}
+        {/* XMI Preview View */}
         {isXMI && showPreview && (
           <div className="w-full h-full bg-[#ffffff] overflow-y-auto">
             <XMIVisualizer xmiContent={localContent} />
           </div>
         )}
 
-        {/* UML Editor Ansicht */}
+        {/* UML Editor View */}
         {!isXMI && isEditing && (
           <div className="w-full h-full">
             <textarea
@@ -202,7 +202,7 @@ const UMLDisplay: React.FC<UMLDisplayProps> = ({
           </div>
         )}
 
-        {/* UML Diagramm Vorschau */}
+        {/* UML Diagram Preview */}
         {!isXMI && !isEditing && (
           <div className="w-full h-full bg-[#ffffff] overflow-y-auto">
             <div

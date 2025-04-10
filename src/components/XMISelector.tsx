@@ -17,8 +17,8 @@ interface XMISelectorProps {
   onClearXMI: () => void;
 }
 
-// Diese Liste enthält alle verfügbaren XMI-Dateien aus dem data/input Verzeichnis
-// ohne die .xmi Endung
+// This list contains all available XMI files from the data/input directory
+// without the .xmi extension
  
 
 const XMISelector: React.FC<XMISelectorProps> = ({
@@ -46,12 +46,12 @@ const XMISelector: React.FC<XMISelectorProps> = ({
         <div className="border-2 rounded-lg p-6 transition-all bg-secondary/10">
           <div className="flex flex-col items-center justify-center space-y-4">
             <Database className="h-12 w-12 text-blue-500" />
-            <p className="text-center font-medium">XMI aus Datenbank auswählen</p>
+            <p className="text-center font-medium">Select XMI from Database</p>
             
             <div className="relative w-full">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Suche nach XMI Dateien..."
+                placeholder="Search XMI files..."
                 className="pl-8"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -66,7 +66,7 @@ const XMISelector: React.FC<XMISelectorProps> = ({
               onXMISelect(baseName);
             }}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="XMI Datei auswählen" />
+                <SelectValue placeholder="Select XMI file" />
               </SelectTrigger>
               <SelectContent>
                 {filteredFiles.map((file) => (
@@ -92,7 +92,7 @@ const XMISelector: React.FC<XMISelectorProps> = ({
               onClick={onClearXMI}
             >
               <X className="h-4 w-4" />
-              <span className="sr-only">XMI entfernen</span>
+              <span className="sr-only">Remove XMI</span>
             </Button>
           </div>
         </div>
