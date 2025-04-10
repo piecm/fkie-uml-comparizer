@@ -1,4 +1,4 @@
-# UML-Whisper-Viz: XMI-Diagramm Visualisierungs- und Vergleichswerkzeug
+# UML-Diagramm Visualisierungs- und Vergleichswerkzeug
 
 Ein modernes Werkzeug zur Visualisierung und zum Vergleich von UML-Diagrammen und XMI-Dateien.
 
