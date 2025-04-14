@@ -113,7 +113,3 @@ yarn start
 - Du kannst zwischen **Quellcode** und **Vorschau** wechseln
 - Bei XMI-Dateien kannst du **„Unterschiede anzeigen“** anklicken, um die Änderungen hervorzuheben
 - Der Textvergleich darunter zeigt alle Unterschiede in einer scrollbaren Liste mit Farbcodes
-
----
-
-Wenn du magst, kann ich dir auch noch eine kurze Einleitung oder Landingpage-Text im selben Stil schreiben. Sag einfach Bescheid!
