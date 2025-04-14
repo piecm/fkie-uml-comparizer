@@ -1,85 +1,83 @@
 # UML-Diagramm Visualisierungs- und Vergleichswerkzeug
 
-Ein modernes Werkzeug zur Visualisierung und zum Vergleich von UML-Diagrammen und XMI-Dateien.
+Ein modernes Tool zur Visualisierung und zum Vergleich von UML-Diagrammen und XMI-Dateien – einfach und intuitiv.
 
 ## Funktionalität
 
 ### Überblick
 
-Die Anwendung unterstützt:
+Mit dieser Anwendung kannst du:
 
-- Visualisierung von PlantUML-Dateien
-- Visualisierung von XMI-Dateien (UML-Klassendiagramme)
-- Vergleich zwischen zwei XMI-Dateien mit Hervorhebung der Unterschiede
-- Dunkles und helles Farbschema
+- PlantUML-Dateien visualisieren
+- XMI-Dateien (UML-Klassendiagramme) anzeigen
+- Zwei XMI-Dateien vergleichen und Unterschiede hervorheben
+- Zwischen hellem und dunklem Farbschema umschalten
 
 ### Hauptfunktionen
 
 #### Datei-Upload
 
-Die Anwendung unterstützt den Upload von drei Typen von Dateien:
-- **Text**: Beschreibungstexte, die als Grundlage für UML-Diagramme dienen
+Du kannst drei Arten von Dateien hochladen:
+
+- **Text**: Beschreibungstexte, aus denen UML-Diagramme entstehen
 - **Mensch-UML**: Von Menschen erstellte UML-Diagramme (PlantUML oder XMI)
-- **KI-UML**: Durch KI generierte UML-Diagramme (PlantUML oder XMI)
+- **KI-UML**: Von einer KI generierte UML-Diagramme (PlantUML oder XMI)
 
 #### XMI-Datenbank
 
-Alternativ zum Datei-Upload können Sie vordefinierte XMI-Dateien aus der integrierten Datenbank auswählen.
+Alternativ kannst du auch auf vordefinierte XMI-Dateien aus einer integrierten Datenbank zugreifen.
 
 #### UML-Visualisierung
 
-Die hochgeladenen UML-Diagramme werden direkt visualisiert:
-- PlantUML-Dateien werden über den PlantUML-Server gerendert
-- XMI-Dateien werden mit einer interaktiven Visualisierung dargestellt, die Klassendiagramme, Assoziationen und Vererbungsbeziehungen zeigt
+Alle hochgeladenen UML-Diagramme werden direkt angezeigt:
+
+- PlantUML-Dateien werden über einen PlantUML-Server gerendert
+- XMI-Dateien werden interaktiv dargestellt, inklusive Klassendiagrammen, Assoziationen und Vererbungen
 
 #### XMI-Vergleich
 
-Bei XMI-Dateien können Sie mit dem "Unterschiede anzeigen"-Button eine vergleichende Ansicht öffnen:
+Wenn du zwei XMI-Dateien vergleichst, kannst du über den Button **„Unterschiede anzeigen“** eine visuelle Vergleichsansicht öffnen:
 
-- Klassen, die hinzugefügt wurden, werden **grün** markiert
-- Klassen, die entfernt wurden, werden **rot** markiert
-- Klassen, die modifiziert wurden, werden **orange** markiert
-- Unveränderte Klassen werden in Standardfarben angezeigt
+- **Grün** = Neue Klassen
+- **Rot** = Entfernte Klassen
+- **Orange** = Geänderte Klassen
+- **Standardfarben** = Unveränderte Klassen
 
-Der Text-Vergleich unterhalb der grafischen Darstellung listet alle Unterschiede auf und verwendet die gleiche Farbcodierung.
+Zusätzlich zeigt ein Textvergleich unterhalb der Visualisierung alle Unterschiede farblich markiert an.
 
 ## Installation und Start
 
 ### Voraussetzungen
 
-- Node.js (Version 16 oder höher)
-- npm (Version 7 oder höher) oder yarn
+- Node.js (ab Version 16)
+- npm (ab Version 7) oder yarn
 
 ### Installation
 
-1. Klonen Sie das Repository:
-   ```bash
-   git clone https://github.com/username/uml-whisper-viz.git
-   cd uml-whisper-viz
-   ```
+1. Installiere die Abhängigkeiten:
 
-2. Installieren Sie die Abhängigkeiten:
    ```bash
    npm install
    # oder
    yarn install
    ```
 
-3. Starten Sie den Entwicklungsserver:
+2. Starte den Entwicklungsserver:
+
    ```bash
    npm run dev
    # oder
    yarn dev
    ```
 
-4. Öffnen Sie die Anwendung in Ihrem Browser:
+3. Öffne deinen Browser und gehe zu:
    ```
    http://localhost:3000
    ```
 
 ### Produktionsbuild
 
-Um einen Produktionsbuild zu erstellen:
+Um einen Produktionsbuild zu erstellen und zu starten:
 
 ```bash
 npm run build
@@ -93,22 +91,29 @@ yarn start
 
 ### Schritt 1: Dateien auswählen
 
-1. Wählen Sie auf der Startseite entweder:
-   - **Datei Upload**: Laden Sie eigene Dateien hoch
-   - **XMI aus Datenbank**: Wählen Sie vordefinierte XMI-Dateien
+1. Auf der Startseite hast du zwei Möglichkeiten:
 
-2. Bei **Datei Upload**:
-   - Laden Sie einen Textbeschreibung, ein manuell erstelltes UML und ein KI-generiertes UML hoch
-   - Oder klicken Sie auf "Beispieldaten laden", um Testdaten zu verwenden
+   - **Datei-Upload**: Lade eigene Dateien hoch
+   - **XMI aus Datenbank**: Wähle eine vorgefertigte Datei aus
 
-3. Bei **XMI aus Datenbank**:
-   - Wählen Sie eine der verfügbaren XMI-Dateien aus dem Dropdown-Menü
+2. Wenn du den Datei-Upload nutzt:
 
-4. Klicken Sie auf "UML-Diagramme vergleichen"
+   - Lade einen Beschreibungstext, ein manuell erstelltes UML und ein KI-generiertes UML hoch
+   - Oder klick auf **„Beispieldaten laden“**, um Testdaten zu verwenden
+
+3. Wenn du XMI aus der Datenbank nutzen willst:
+
+   - Wähle im Dropdown-Menü eine Datei aus
+
+4. Klick auf **„UML-Diagramme vergleichen“**
 
 ### Schritt 2: Vergleichen und Analysieren
 
-- Sie sehen die visualisierten UML-Diagramme Seite an Seite (links menschlich, rechts KI)
-- Für jedes Diagramm können Sie zwischen **Quellcode** und **Vorschau** wechseln
-- Bei XMI-Dateien können Sie auf "Unterschiede anzeigen" klicken, um eine vergleichende Ansicht zu öffnen
-- Der Text-Vergleich unter der Grafik zeigt alle Unterschiede in einer scrollbaren Liste
+- Du siehst beide UML-Diagramme nebeneinander (links: Mensch, rechts: KI)
+- Du kannst zwischen **Quellcode** und **Vorschau** wechseln
+- Bei XMI-Dateien kannst du **„Unterschiede anzeigen“** anklicken, um die Änderungen hervorzuheben
+- Der Textvergleich darunter zeigt alle Unterschiede in einer scrollbaren Liste mit Farbcodes
+
+---
+
+Wenn du magst, kann ich dir auch noch eine kurze Einleitung oder Landingpage-Text im selben Stil schreiben. Sag einfach Bescheid!
